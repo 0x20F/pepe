@@ -14,7 +14,7 @@ const allCommands = (dir, _files) => {
   
     files.forEach(file => {
         if (fs.statSync(dir + "/" + file).isDirectory()) {
-            _files = getAllFiles(dir + "/" + file, _files);
+            _files = allCommands(dir + "/" + file, _files);
         } else {
             _files.push(path.join(dir, "/", file));
         }
