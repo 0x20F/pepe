@@ -1,0 +1,20 @@
+{
+  "name": "pepe",
+  "version": "1.0.0",
+  "description": "Discord bot for all our needs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0x20F/pepe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/0x20F/pepe/issues"
+  },
+  "homepage": "https://github.com/0x20F/pepe#readme"
+}
