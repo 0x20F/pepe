@@ -36,7 +36,7 @@ class Feed {
                         await this.request(what, results => feed.fetchedContent = this.shuffle(results));
                     }
 
-                }, 1E4, what, feedId),
+                }, 1E3 * 60 * 30, what, feedId),
                 seenContent: [],
                 fetchedContent: []
             }
