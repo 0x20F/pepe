@@ -4,7 +4,7 @@ const axios = require('axios').default;
 class Feed {
     feeds = {};
 
-    boot = client => {
+    boot = async client => {
         client.on('message', message => {
             let content = message.content;
 
@@ -19,36 +19,41 @@ class Feed {
 
             // Add identifiers with content to prevent colisions
             this.feeds[feedId] = {
-                interval: setInterval(what => {
-                        let feed = this.feeds[feedId];
+                interval: setInterval(async what => {
+                    let feed = this.feeds[feedId];
 
-                        if (feed.fetchedContent.length > 0) {
-                            let next = feed.fetchedContent.pop();
+                    if (feed.fetchedContent.length > 0) {
+                        let next = feed.fetchedContent.pop();
 
-                            channel.send(next.title);
-                            channel.send(next.url);
+                        channel.send(next.title);
+                        channel.send(next.url);
 
-                            feed.seenContent.push(next);
-                        }
+                        feed.seenContent.push(next);
+                    }
 
-                        if (feed.fetchedContent.length === 0) {
-                            console.log('Fetching more for feed', feedId);
+                    if (feed.fetchedContent.length === 0) {
+                        console.log('Fetching more for feed', feedId);
+                        await this.request(what, results => feed.fetchedContent = this.shuffle(results));
+                    }
 
-                            axios.get(`https://www.reddit.com/r/${what}/top.json?sort=top&t=day&limit=100`)
-                                .then(response => response.data.data.children)
-                                .then(data => {
-                                    feed.fetchedContent = data.map(post => post.data);
-                                })
-                                .catch(err => console.log(err));      
-                        }
-
-                    }, 1E4, what, feedId),
+                }, 1E4, what, feedId),
                 seenContent: [],
                 fetchedContent: []
             }
-
-            console.log(this.feeds);    
         });
+    }
+
+
+    request = async (subreddit, callback) => {
+        axios.get(`https://www.reddit.com/r/${subreddit}/top.json?sort=top&t=day&limit=100`)
+            .then(response => response.data.data.children)
+            .then(data => callback(data.map(post => post.data)))
+            .catch(err => console.log(err));      
+    }
+
+
+    shuffle(array) {
+        return array.sort(() => Math.random() - 0.5);
     }
 }
 
