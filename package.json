@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/0x20F/pepe#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "discord.js": "^12.4.1"
   }
 }
