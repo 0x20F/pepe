@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/0x20F/pepe/issues"
   },
-  "homepage": "https://github.com/0x20F/pepe#readme"
+  "homepage": "https://github.com/0x20F/pepe#readme",
+  "dependencies": {
+    "discord.js": "^12.4.1"
+  }
 }
