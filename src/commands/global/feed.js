@@ -15,26 +15,24 @@ class Feed {
             // What subreddit to feed, and to what channel
             let subreddit = content.substring(content.indexOf(' ') + 1);
             let channel = message.channel;
-            let feedId = channel.toString() + what;
-
+            let feedId = channel.toString() + subreddit;
 
             // Add identifiers with content to prevent colisions
             this.feeds[feedId] = {
                 id: feedId,
-                interval: setInterval(this.next(subreddit, feedId), 1E3 * 60 * 30, subreddit, feedId),
+                interval: setInterval(async () => await this.next(subreddit, feedId), 1E3 * 60 * 30, subreddit, feedId),
                 seenContent: [],
-                fetchedContent: []
+                fetchedContent: [],
+                channel: channel
             }
 
 
-            channel.send(`
-                Initialized feed for subreddit: ${subreddit}\n
-                Images/Posts will come in every 30 minutes.\n
-                Fetching top 100 posts of the week...
-            `);
+            channel.send(`- Initialized feed for subreddit: ${subreddit}\n- Images/Posts will come in every 30 minutes.\n- Fetching top 100 posts of the week...`);
 
             // Initial fetch, and run it once
             await this.request(subreddit, results => {
+                let feed = this.feeds[feedId];
+
                 feed.fetchedContent = this.shuffle(results);
                 this.next(subreddit, feed.id);
             });
@@ -56,8 +54,8 @@ class Feed {
         if (feed.fetchedContent.length > 0) {
             let next = feed.fetchedContent.pop();
 
-            channel.send(next.title);
-            channel.send(next.url);
+            feed.channel.send(next.title);
+            feed.channel.send(next.url);
 
             feed.seenContent.push(next);
         }
