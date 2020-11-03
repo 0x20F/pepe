@@ -4,6 +4,10 @@ class Ping {
             if (message.content === 'ping') {
                 message.reply('Pong!');
             }
+
+            if (message.content === 'pong') {
+                message.reply('Ping!');
+            }
         });
     }
 }
