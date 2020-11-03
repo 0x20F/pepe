@@ -53,6 +53,13 @@ class Feed {
     }
 
 
+    /**
+     * Make a request to the reddit api and get the latest 100 posts
+     * this week.
+     * 
+     * @param {string} subreddit What subreddit to fetch from
+     * @param {callable} callback What to do when all data has been retrieved
+     */
     request = async (subreddit, callback) => {
         axios.get(`https://www.reddit.com/r/${subreddit}/top.json?sort=top&t=week&limit=100`)
             .then(response => response.data.data.children)
@@ -61,6 +68,12 @@ class Feed {
     }
 
 
+    /**
+     * Get the next image for the feed
+     * 
+     * @param {string} subreddit 
+     * @param {int} feedId 
+     */
     next = async (subreddit, feedId) => {
         let feed = this.feeds[feedId];
 
@@ -78,6 +91,12 @@ class Feed {
     }
 
 
+    /**
+     * Build a discord embed with all the data so it's nice
+     * and structured when it gets sent in chat
+     * 
+     * @param {object} data The reddit post object
+     */
     buildEmbed = data => {
         let embed = new MessageEmbed()
             .setTitle(data.title)
@@ -89,6 +108,11 @@ class Feed {
     }
 
 
+    /**
+     * Shuffle an array so all elements are in random order
+     * 
+     * @param {array} array 
+     */
     shuffle(array) {
         return array.sort(() => Math.random() - 0.5);
     }
