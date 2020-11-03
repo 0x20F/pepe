@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const axios = require('axios').default;
 
 
@@ -53,10 +55,8 @@ class Feed {
 
         if (feed.fetchedContent.length > 0) {
             let next = feed.fetchedContent.pop();
-
-            feed.channel.send(next.title);
-            feed.channel.send(next.url);
-
+            
+            feed.channel.send(this.buildEmbed(next));
             feed.seenContent.push(next);
         }
 
@@ -64,6 +64,17 @@ class Feed {
             console.log('Fetching more for feed', feedId);
             await this.request(subreddit, results => feed.fetchedContent = this.shuffle(results));
         }
+    }
+
+
+    buildEmbed = data => {
+        let embed = new MessageEmbed()
+            .setTitle(data.title)
+            .setURL(data.url)
+            .setImage(data.url)
+            .setFooter(`By u/${data.author}`, data.thumbnail);
+
+        return embed;
     }
 
 
