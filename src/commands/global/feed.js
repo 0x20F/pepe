@@ -10,7 +10,7 @@ class Feed {
         client.on('message', async message => {
             let content = message.content;
 
-            if (!content.startsWith('$feed')) {
+            if (!content.startsWith('$feed') && !content.startsWith('$unfeed')) {
                 return;
             }
 
@@ -18,6 +18,17 @@ class Feed {
             let subreddit = content.substring(content.indexOf(' ') + 1);
             let channel = message.channel;
             let feedId = channel.toString() + subreddit;
+
+            // Check if cleanup requested
+            if (content.startsWith('$unfeed')) {
+                channel.send(`Stopping feed for: ${subreddit}`);
+                
+                clearInterval(this.feeds[feedId].interval);
+                delete this.feeds[feedId];
+
+                console.log('Remaining feeds after deletion:', Object.keys(this.feeds).length);
+                return;
+            }
 
             // Add identifiers with content to prevent colisions
             this.feeds[feedId] = {
