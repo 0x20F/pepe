@@ -1,14 +1,20 @@
 class Ping {
     boot = client => {
         client.on('message', message => {
-            if (message.content === 'ping') {
-                message.reply('Pong!');
+            let textMessage = message.content.toLowerCase();
+
+            if (textMessage.includes('ping') && !this.isBot(message)) {
+                message.reply(message.content.replace(/([pP]ing)/gm, 'pong'));
             }
 
-            if (message.content === 'pong') {
-                message.reply('Ping!');
+            if (textMessage.includes('pong') && !this.isBot(message)) {
+                message.reply(message.content.replace(/([pP]ong)/gm, 'ping'));
             }
         });
+    }
+
+    isBot = message => {
+        return message.author.bot;
     }
 }
 
