@@ -52,7 +52,7 @@ class Get {
             .setTitle(data.title)
             .setURL(data.url)
             .setImage(data.url)
-            .setFooter(`By u/${data.author}`, data.thumbnail);
+            .setFooter(`By u/${data.author}`);
 
         return embed;
     }
