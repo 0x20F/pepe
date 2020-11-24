@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 
 const axios = require('axios').default;
+const config = require('../../../config');
 
 
 class Feed {
@@ -10,7 +11,7 @@ class Feed {
         client.on('message', async message => {
             let content = message.content;
 
-            if (!content.startsWith('$feed') && !content.startsWith('$unfeed')) {
+            if (!content.startsWith(config.prefix + 'feed') && !content.startsWith(config.prefix + 'unfeed')) {
                 return;
             }
 
@@ -20,7 +21,7 @@ class Feed {
             let feedId = channel.toString() + subreddit;
 
             // Check if cleanup requested
-            if (content.startsWith('$unfeed')) {
+            if (content.startsWith(config.prefix + 'unfeed')) {
                 channel.send(`Stopping feed for: ${subreddit}`);
                 
                 clearInterval(this.feeds[feedId].interval);

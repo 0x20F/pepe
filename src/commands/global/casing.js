@@ -1,9 +1,11 @@
+const config = require('../../../config');
+
 class Get {
     boot = async client => {
         client.on('message', async message => {
             let content = message.content;
 
-            if (!content.startsWith('$rrCase')) {
+            if (!content.startsWith(config.prefix + 'rrCase')) {
                 return;
             }
 

@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const config = require('../../../config');
 
 const axios = require('axios').default;
 
@@ -8,7 +9,7 @@ class Get {
         client.on('message', async message => {
             let content = message.content;
 
-            if (!content.startsWith('$get')) {
+            if (!content.startsWith(config.prefix + 'get')) {
                 return;
             }
 
