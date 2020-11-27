@@ -34,8 +34,8 @@ class Subreddits extends Command {
                     return;
                 }
 
-                let post = results[Math.floor(Math.random() * results.length)];
-                channel.send(this.buildEmbed(post));
+                let post: RedditResponse = results[Math.floor(Math.random() * results.length)];
+                channel.send(post.url);
             });
         });
     };
@@ -53,23 +53,6 @@ class Subreddits extends Command {
             .then(response => response.data.data.children)
             .then(data => callback(data.map((post: any) => post.data)))
             .catch(err => callback([]));      
-    }
-
-
-    /**
-     * Build a discord embed with all the data so it's nice
-     * and structured when it gets sent in chat
-     * 
-     * @param {object} data The reddit post object
-     */
-    buildEmbed = (data: RedditResponse) => {
-        let embed = new MessageEmbed()
-            .setTitle(data.title)
-            .setURL(data.url)
-            .setImage(data.url)
-            .setFooter(`By u/${data.author}`);
-
-        return embed;
     }
 }
 
