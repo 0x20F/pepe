@@ -120,4 +120,4 @@ class Feed {
 }
 
 
-module.exports = new Feed();
+module.exports = Feed;

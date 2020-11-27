@@ -24,4 +24,4 @@ class Ping {
 }
 
 
-module.exports = new Ping();
+module.exports = Ping;

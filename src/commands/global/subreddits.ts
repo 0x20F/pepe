@@ -1,30 +1,44 @@
-const { MessageEmbed } = require('discord.js');
-const config = require('../../../config');
+import Command from '../../foundation/command';
+import { Client, MessageEmbed } from 'discord.js';
+import axios from 'axios';
 
-const axios = require('axios').default;
 
 
-class Get {
-    boot = async client => {
-        client.on('message', async message => {
+type RedditResponse = {
+    url: string,
+    author: string,
+    title: string
+}
+
+
+
+class Subreddits extends Command {
+    boot = async (c: Client): Promise<any> => {
+        c.on('message', async message => {
             let content = message.content;
 
-            if (!content.startsWith(config.prefix + 'get')) {
+            // Only check if it starts with prefix
+            if (!this.starts_with('', content)) {
                 return;
             }
 
-            // What subreddit to feed, and to what channel
-            let subreddit = content.substring(content.indexOf(' ') + 1);
+            let subreddit = this.segment(0, content);
             let channel = message.channel;
 
 
-            // Initial fetch, and run it once
+            // Make the request to the subreddit
+            // and return something accordingly.
             await this.request(subreddit, results => {
+                if (results.length === 0) {
+                    channel.send("Didn't get anything back from that subreddit :thinking:");
+                    return;
+                }
+
                 let post = results[Math.floor(Math.random() * results.length)];
                 channel.send(this.buildEmbed(post));
             });
         });
-    }
+    };
 
 
     /**
@@ -34,11 +48,11 @@ class Get {
      * @param {string} subreddit What subreddit to fetch from
      * @param {callable} callback What to do when all data has been retrieved
      */
-    request = async (subreddit, callback) => {
+    request = async (subreddit: string, callback: (a: []) => void) => {
         axios.get(`https://www.reddit.com/r/${subreddit}/top.json?sort=top&t=week&limit=100`)
             .then(response => response.data.data.children)
-            .then(data => callback(data.map(post => post.data)))
-            .catch(err => console.log(err));      
+            .then(data => callback(data.map((post: any) => post.data)))
+            .catch(err => callback([]));      
     }
 
 
@@ -48,7 +62,7 @@ class Get {
      * 
      * @param {object} data The reddit post object
      */
-    buildEmbed = data => {
+    buildEmbed = (data: RedditResponse) => {
         let embed = new MessageEmbed()
             .setTitle(data.title)
             .setURL(data.url)
@@ -60,4 +74,4 @@ class Get {
 }
 
 
-module.exports = new Get();
+export default Subreddits;
