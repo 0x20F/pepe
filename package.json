@@ -17,7 +17,7 @@
     "url": "https://github.com/0x20F/pepe/issues"
   },
   "_moduleAliases": {
-    "@foundation": "src/foundation"
+    "@foundation": "dist/src/foundation"
   },
   "homepage": "https://github.com/0x20F/pepe#readme",
   "dependencies": {

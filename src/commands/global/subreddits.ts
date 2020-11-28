@@ -1,5 +1,5 @@
-import Command from '../../foundation/command';
-import { Client, MessageEmbed } from 'discord.js';
+import Command from '@foundation/command';
+import { Client } from 'discord.js';
 import axios from 'axios';
 
 
