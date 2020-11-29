@@ -29,7 +29,7 @@ class Subreddits extends Command {
         // and return something accordingly.
         await this.request(subreddit, results => {
             if (results.length === 0) {
-                channel.send("Didn't get anything back from that subreddit :thinking:");
+                channel.send("Didn't get anything back from that subreddit <:pepeHands:782612334295384074>");
                 return;
             }
 
