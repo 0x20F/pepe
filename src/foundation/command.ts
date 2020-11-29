@@ -1,8 +1,17 @@
-import { Client } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import config from '../../config.json';
 
 abstract class Command {
-    abstract boot(c: Client): void;
+    client: Client;
+
+    constructor(c: Client) {
+        this.client = c;
+
+        this.client.on('message', message => this.onMessage(message));
+    }
+
+    boot = (c: Client): void => {};
+    onMessage = (message: Message): void => {};
 
 
     /**

@@ -1,5 +1,5 @@
 import Command from '@foundation/command';
-import { Client } from 'discord.js';
+import { Message } from 'discord.js';
 import axios from 'axios';
 
 
@@ -13,32 +13,30 @@ type RedditResponse = {
 
 
 class Subreddits extends Command {
-    boot = async (c: Client): Promise<any> => {
-        c.on('message', async message => {
-            let content = message.content;
+    onMessage = async (message: Message): Promise<void> => {
+        let content = message.content;
 
-            // Only check if it starts with prefix
-            if (!this.starts_with('', content)) {
+        // Only check if it starts with prefix
+        if (!this.starts_with('', content)) {
+            return;
+        }
+
+        let subreddit = this.segment(0, content);
+        let channel = message.channel;
+
+
+        // Make the request to the subreddit
+        // and return something accordingly.
+        await this.request(subreddit, results => {
+            if (results.length === 0) {
+                channel.send("Didn't get anything back from that subreddit :thinking:");
                 return;
             }
 
-            let subreddit = this.segment(0, content);
-            let channel = message.channel;
-
-
-            // Make the request to the subreddit
-            // and return something accordingly.
-            await this.request(subreddit, results => {
-                if (results.length === 0) {
-                    channel.send("Didn't get anything back from that subreddit :thinking:");
-                    return;
-                }
-
-                let post: RedditResponse = results[Math.floor(Math.random() * results.length)];
-                channel.send(post.url);
-            });
+            let post: RedditResponse = results[Math.floor(Math.random() * results.length)];
+            channel.send(post.url);
         });
-    };
+    }
 
 
     /**
