@@ -5,16 +5,16 @@ import config from '../config.json';
 import { Client } from 'discord.js';
 
 // Ugly way of importing EVERYTHING
-import Feed from './commands/global/feed';
 import Ping from './commands/global/ping';
 import Subreddits from './commands/global/subreddits';
+import Roll from './commands/global/roll';
 
 const client = new Client();
 
 const commands = [
-    new Feed(),
     new Ping(client),
-    new Subreddits(client)
+    new Subreddits(client),
+    new Roll(client)
 ];
 
 

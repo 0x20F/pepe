@@ -1,5 +1,5 @@
 import Command from '@foundation/command';
-import { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import axios from 'axios';
 
 
@@ -13,16 +13,24 @@ type RedditResponse = {
 
 
 class Subreddits extends Command {
+    boot = (c: Client) => this.register_prefix('subreddits')
+
     onMessage = async (message: Message): Promise<void> => {
         let content = message.content;
 
-        // Only check if it starts with prefix
+        let prefix = this.segment(0, content);
+
         if (!this.starts_with('', content)) {
             return;
         }
 
-        let subreddit = this.segment(0, content);
+        // Make sure there aren't any commands called by the subreddit name
+        if (!this.is_unique(prefix)) {
+            return;
+        }
+
         let channel = message.channel;
+        let subreddit = prefix;
 
 
         // Make the request to the subreddit

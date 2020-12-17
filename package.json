@@ -4,7 +4,8 @@
   "description": "Discord bot for all our needs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dist && npx tsc --outDir dist",
+    "start": "npm run build && node dist/src/index.js"
   },
   "repository": {
     "type": "git",
