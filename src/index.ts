@@ -8,13 +8,15 @@ import { Client } from 'discord.js';
 import Ping from './commands/global/ping';
 import Subreddits from './commands/global/subreddits';
 import Roll from './commands/global/roll';
+import Xkcd from './commands/global/xkcd';
 
 const client = new Client();
 
 const commands = [
     new Ping(client),
     new Subreddits(client),
-    new Roll(client)
+    new Roll(client),
+    new Xkcd(client)
 ];
 
 

@@ -82,6 +82,10 @@ abstract class Command {
         let segments = from.split(separator);
         let segment = segments[which];
 
+        if (!segment) {
+            return undefined;
+        }
+
         if (segment.startsWith(prefix)) {
             segment = segment.substring(prefix.length);
         }
