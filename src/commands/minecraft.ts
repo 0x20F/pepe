@@ -4,10 +4,10 @@ import config from '../../config.json';
 
 import { Message, Channel, User } from 'discord.js';
 
-// 4 hours
-const DEADLINE = 1 * 60 * 60 * 1000;
 
-// 3.5 hours
+const HOURS = 3;
+const DEADLINE = HOURS * 60 * 60 * 1000;
+// 2.5 hours
 const WARNING = DEADLINE - 30 * 60 * 1000;
 
 
@@ -72,7 +72,7 @@ class Minecraft extends Command {
                     return;
                 }
 
-                message.reply("Adding 4 more hours of uptime! Have fun :pray:");
+                message.reply(`Adding \`${ HOURS }\` more hours of uptime! Have fun :pray:`);
                 
                 clearTimeout(this.timer.deadline);
                 clearTimeout(this.timer.warning);
