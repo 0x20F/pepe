@@ -2,7 +2,7 @@ import Command from "@foundation/command";
 import { Client, Message } from "discord.js";
 
 class Roll extends Command {
-    boot = (c: Client) => this.register_prefix('roll')
+    boot = () => this.register_prefix('roll')
 
     onMessage = async (message: Message): Promise<void> => {
         let content = message.content;

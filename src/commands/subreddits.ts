@@ -13,7 +13,7 @@ type RedditResponse = {
 
 
 class Subreddits extends Command {
-    boot = (c: Client) => this.register_prefix('subreddits')
+    boot = () => this.register_prefix('subreddits')
 
     onMessage = async (message: Message): Promise<void> => {
         let content = message.content;

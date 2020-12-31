@@ -4,7 +4,7 @@ import { Message, Client } from 'discord.js';
 
 
 class Xkcd extends Command {
-    boot = (c: Client) => this.register_prefix('xkcd');
+    boot = () => this.register_prefix('xkcd');
 
     onMessage = (message: Message): void => {
         let content = message.content;

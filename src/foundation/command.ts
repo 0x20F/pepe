@@ -14,7 +14,7 @@ abstract class Command {
         this.list = commands;
     }
 
-    boot = (c: Client): void => {};
+    boot = (): void => {};
     onMessage = (message: Message): void => {};
 
 

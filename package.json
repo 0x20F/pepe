@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/0x20F/pepe#readme",
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "discord.js": "^12.4.1",
     "module-alias": "^2.2.2",
     "typescript": "^4.1.2"

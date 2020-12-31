@@ -1,4 +1,11 @@
 {
     "token": "",
-    "prefix": "@"
+    "prefix": "@",
+    "minecraft": {
+        "stopUrl": "",
+        "startUrl": "",
+        "admins": [
+            ""
+        ]
+    }
 }
