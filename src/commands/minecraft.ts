@@ -62,7 +62,10 @@ class Minecraft extends Command {
                     return;
                 }
 
+                clearTimeout(this.timer.deadline);
+                clearTimeout(this.timer.warning);
                 this.timer = undefined;
+                
                 this.stop(message);
                 break;
 
