@@ -61,10 +61,6 @@ class Minecraft extends Command {
                     message.reply("There is no server to stop!");
                     return;
                 }
-
-                clearTimeout(this.timer.deadline);
-                clearTimeout(this.timer.warning);
-                this.timer = undefined;
                 
                 this.stop(message);
                 break;
@@ -94,6 +90,10 @@ class Minecraft extends Command {
      */
     stop = async (message: Message) => {
         let stop = config.minecraft.stopUrl;
+
+        clearTimeout(this.timer.deadline);
+        clearTimeout(this.timer.warning);
+        this.timer = undefined;
 
         axios.get(stop).then(res => {
             message.reply("\n" + res.data);
