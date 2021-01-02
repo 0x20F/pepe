@@ -31,9 +31,22 @@ class Minecraft extends Command {
             return;
         }
 
+        // Check if this is a DM or not
+        if (message.channel.type !== 'text') {
+            message.reply("This command doesn't work outside a server!");
+            return;
+        }
+
+        // Check if this guild is allowed to run the command
+        if (message.channel.guild.id !== config.minecraft.controlGuild) {
+            message.reply("That command is only available inside the `█ Hoon` server!");
+            return;
+        }
+
         let command = this.segment(1, content);
         let author = message.author.id;
 
+        // Check if the author is allowed to run this command
         if (!config.minecraft.admins.includes(author)) {
             message.reply("You don't have permission to do that!");
             return;
@@ -71,13 +84,7 @@ class Minecraft extends Command {
                     return;
                 }
 
-                message.reply(`Adding \`${ HOURS }\` more hours of uptime! Have fun :pray:`);
-                
-                clearTimeout(this.timer.deadline);
-                clearTimeout(this.timer.warning);
-
-                this.timer.deadline = setTimeout(() => this.stop(message), DEADLINE);
-                this.timer.warning = setTimeout(() => this.warn(message), WARNING);
+                this.renew(message);
                 break;
         }
     }
@@ -112,6 +119,23 @@ class Minecraft extends Command {
         axios.get(start).then(res => {
             message.channel.send("\n" + res.data);
         }).catch(_ => message.reply("Couldn't start the server, something went wrong!"));
+    }
+
+
+    /**
+     * Reset the timers that keep track of how long
+     * the server has been running.
+     * 
+     * @param message 
+     */
+    renew = async (message: Message) => {
+        message.reply(`Adding \`${ HOURS }\` more hours of uptime! Have fun :pray:`);
+                
+        clearTimeout(this.timer.deadline);
+        clearTimeout(this.timer.warning);
+
+        this.timer.deadline = setTimeout(() => this.stop(message), DEADLINE);
+        this.timer.warning = setTimeout(() => this.warn(message), WARNING);
     }
 
 

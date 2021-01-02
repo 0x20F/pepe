@@ -2,6 +2,7 @@
     "token": "",
     "prefix": "@",
     "minecraft": {
+        "controlGuild": "",
         "stopUrl": "",
         "startUrl": "",
         "admins": [
