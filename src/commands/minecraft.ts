@@ -2,7 +2,7 @@ import Command from '@foundation/command';
 import axios from 'axios';
 import config from '../../config.json';
 
-import { Message, Channel, User } from 'discord.js';
+import { Message, Channel, User, Role } from 'discord.js';
 
 
 const HOURS = 3;
@@ -44,10 +44,9 @@ class Minecraft extends Command {
         }
 
         let command = this.segment(1, content);
-        let author = message.author.id;
 
         // Check if the author is allowed to run this command
-        if (!config.minecraft.admins.includes(author)) {
+        if (!message.member.roles.cache.get(config.minecraft.adminRole)) {
             message.reply("You don't have permission to do that!");
             return;
         }
