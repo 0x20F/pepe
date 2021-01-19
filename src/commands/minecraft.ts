@@ -53,6 +53,10 @@ class Minecraft extends Command {
         }
 
         switch (command) {
+            case "info":
+                console.log(message.author.presence);
+                break;
+
             case "start":
                 if (this.timer) {
                     message.reply("Server is already running!");

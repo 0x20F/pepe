@@ -18,7 +18,7 @@ const commands = [
     new Subreddits(client),
     new Roll(client),
     new Xkcd(client),
-    new Minecraft(client)
+    //new Minecraft(client)
 ];
 
 
